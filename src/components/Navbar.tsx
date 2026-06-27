@@ -29,136 +29,100 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? "rgba(10,10,10,0.95)" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--border)" : "none",
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+          transition: "background 0.4s, border-color 0.4s",
+          background: scrolled ? "rgba(5,5,5,0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(20px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex flex-col leading-none cursor-pointer"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            <span className="text-white font-bold text-lg tracking-widest">GDMR</span>
-            <span style={{ color: "var(--gold)", fontSize: "0.55rem", letterSpacing: "0.3em", fontFamily: "var(--font-body)", fontWeight: 500 }}>
-              FOUNDATION
-            </span>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 2rem", height: 72, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <Link href="/" style={{ textDecoration: "none", display: "flex", flexDirection: "column", lineHeight: 1 }}>
+            <span style={{ fontFamily: "var(--font-h)", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "0.2em", color: "#fff" }}>GDMR</span>
+            <span style={{ fontFamily: "var(--font-b)", fontSize: "0.5rem", letterSpacing: "0.4em", color: "var(--gold)", fontWeight: 500, textTransform: "uppercase" }}>Foundation</span>
           </Link>
 
-          <div className="flex items-center gap-4">
-            <a
-              href="#contact"
-              className="hidden sm:block text-xs font-medium tracking-widest uppercase px-5 py-2 border transition-all duration-200 cursor-pointer"
-              style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.background = "var(--gold)";
-                (e.currentTarget as HTMLElement).style.color = "#0a0a0a";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.background = "transparent";
-                (e.currentTarget as HTMLElement).style.color = "var(--gold)";
-              }}
-            >
-              Contact
-            </a>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+            <a href="#contact" style={{
+              fontSize: "0.65rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase",
+              padding: "0.6rem 1.4rem", border: "1px solid var(--gold)", color: "var(--gold)",
+              textDecoration: "none", transition: "all 0.25s", cursor: "none",
+            }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "var(--gold)"; el.style.color = "#000"; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "var(--gold)"; }}
+            >Contact</a>
+
             <button
               onClick={() => setOpen(true)}
-              className="flex flex-col gap-1.5 p-2 cursor-pointer"
-              aria-label="Open menu"
+              aria-label="Menu"
+              style={{ background: "none", border: "none", cursor: "none", padding: "0.5rem", display: "flex", flexDirection: "column", gap: 5 }}
             >
-              <span className="block w-6 h-px bg-white transition-all duration-200" />
-              <span className="block w-4 h-px bg-white transition-all duration-200" />
-              <span className="block w-6 h-px bg-white transition-all duration-200" />
+              {[6, 4, 6].map((w, i) => (
+                <span key={i} style={{ display: "block", height: 1, background: "#fff", width: w * 4, transition: "all 0.3s" }} />
+              ))}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Full-screen overlay menu */}
-      <div
-        className="fixed inset-0 z-[100] flex flex-col transition-all duration-500"
-        style={{
-          background: "#0a0a0a",
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "all" : "none",
-          transform: open ? "translateY(0)" : "translateY(-100%)",
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between w-full">
-          <span
-            className="flex flex-col leading-none"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            <span className="text-white font-bold text-lg tracking-widest">GDMR</span>
-            <span style={{ color: "var(--gold)", fontSize: "0.55rem", letterSpacing: "0.3em", fontFamily: "var(--font-body)", fontWeight: 500 }}>
-              FOUNDATION
-            </span>
-          </span>
-          <button
-            onClick={() => setOpen(false)}
-            className="text-white text-sm tracking-widest uppercase flex items-center gap-3 cursor-pointer"
-            aria-label="Close menu"
-          >
-            <span className="font-light" style={{ fontFamily: "var(--font-body)" }}>✕ CLOSE</span>
+      {/* Overlay menu */}
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 100,
+        background: "#050505",
+        transition: "opacity 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1)",
+        opacity: open ? 1 : 0,
+        transform: open ? "translateY(0)" : "translateY(-100%)",
+        pointerEvents: open ? "all" : "none",
+        display: "flex", flexDirection: "column",
+      }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 2rem", height: 72, display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+          <span style={{ fontFamily: "var(--font-h)", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "0.2em", color: "#fff" }}>GDMR</span>
+          <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "none", color: "#fff", fontSize: "0.65rem", letterSpacing: "0.25em", fontFamily: "var(--font-b)", textTransform: "uppercase" }}>
+            ✕ &nbsp;Close
           </button>
         </div>
 
-        <div className="flex-1 flex flex-col justify-center px-6 max-w-7xl mx-auto w-full">
-          <nav className="space-y-1">
-            {menuItems.map((item, i) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="group flex items-baseline gap-6 py-4 border-b cursor-pointer block"
-                style={{
-                  borderColor: "var(--border)",
-                  transitionDelay: `${i * 50}ms`,
-                }}
-              >
-                <span
-                  className="text-xs font-mono"
-                  style={{ color: "var(--gold)", letterSpacing: "0.1em" }}
-                >
-                  {item.num}
-                </span>
-                <span
-                  className="text-4xl sm:text-5xl md:text-6xl font-light text-white group-hover:translate-x-3 transition-transform duration-300"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  {item.label}
-                </span>
-              </a>
-            ))}
-          </nav>
+        <nav style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: 1400, margin: "0 auto", padding: "0 2rem", width: "100%" }}>
+          {menuItems.map((item, i) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              style={{
+                display: "flex", alignItems: "baseline", gap: "1.5rem",
+                padding: "1rem 0", borderBottom: "1px solid var(--border)",
+                textDecoration: "none", cursor: "none",
+                transition: `all 0.3s ${i * 0.04}s`,
+              }}
+              onMouseEnter={e => { (e.currentTarget.querySelector(".menu-title") as HTMLElement)!.style.transform = "translateX(12px)"; (e.currentTarget.querySelector(".menu-title") as HTMLElement)!.style.color = "var(--gold)"; }}
+              onMouseLeave={e => { (e.currentTarget.querySelector(".menu-title") as HTMLElement)!.style.transform = "translateX(0)"; (e.currentTarget.querySelector(".menu-title") as HTMLElement)!.style.color = "#fff"; }}
+            >
+              <span style={{ fontFamily: "var(--font-b)", fontSize: "0.65rem", color: "var(--gold)", letterSpacing: "0.15em", minWidth: 24 }}>{item.num}</span>
+              <span className="menu-title" style={{ fontFamily: "var(--font-h)", fontSize: "clamp(2rem,5vw,4rem)", fontWeight: 400, color: "#fff", transition: "all 0.3s ease" }}>
+                {item.label}
+              </span>
+            </a>
+          ))}
+        </nav>
 
-          <div className="mt-12 flex flex-col sm:flex-row gap-6 sm:gap-12">
-            <div>
-              <p className="chapter-label mb-2">Address</p>
-              <p className="text-sm text-white/60 leading-relaxed">
-                GDMR Building, Samithy Nagar,<br />
-                Peroorkada, Thiruvananthapuram, Kerala
-              </p>
-            </div>
-            <div>
-              <p className="chapter-label mb-2">Inquiries</p>
-              <p className="text-sm" style={{ color: "var(--gold)" }}>info@gdmrfoundation.com</p>
-            </div>
-            <div className="flex gap-5">
-              {["FB", "IG", "IN"].map(s => (
-                <a key={s} href="#" className="text-xs font-medium tracking-widest text-white/40 hover:text-white transition-colors duration-200">
-                  {s}
-                </a>
-              ))}
-            </div>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "1.5rem 2rem 2.5rem", width: "100%", display: "flex", gap: "3rem", flexWrap: "wrap" }}>
+          <div>
+            <p className="chapter-label" style={{ marginBottom: "0.5rem" }}>Address</p>
+            <p style={{ fontSize: "0.8rem", color: "rgba(240,235,224,0.5)", lineHeight: 1.7 }}>GDMR Building, Samithy Nagar,<br />Peroorkada, Thiruvananthapuram, Kerala</p>
           </div>
-        </div>
-
-        <div className="px-6 pb-6 max-w-7xl mx-auto w-full">
-          <p className="text-xs text-white/20 tracking-widest uppercase">© 2025 GDMR Foundation</p>
+          <div>
+            <p className="chapter-label" style={{ marginBottom: "0.5rem" }}>Inquiries</p>
+            <p style={{ fontSize: "0.8rem", color: "var(--gold)" }}>info@gdmrfoundation.com</p>
+          </div>
+          <div style={{ display: "flex", gap: "1.2rem", alignItems: "flex-end" }}>
+            {["FB", "IG", "IN"].map(s => (
+              <a key={s} href="#" style={{ fontSize: "0.7rem", letterSpacing: "0.15em", color: "rgba(240,235,224,0.3)", textDecoration: "none", transition: "color 0.2s", cursor: "none" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--gold)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(240,235,224,0.3)"; }}
+              >{s}</a>
+            ))}
+          </div>
         </div>
       </div>
     </>

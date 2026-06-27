@@ -1,93 +1,98 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 
+const ThreeCanvas = dynamic(() => import("./ThreeCanvas"), { ssr: false });
+
 export default function Hero() {
-  const titleRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = titleRef.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(60px)";
-    const t = setTimeout(() => {
-      el.style.transition = "opacity 1s ease, transform 1s ease";
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }, 200);
-    return () => clearTimeout(t);
+    import("gsap").then(({ default: gsap }) => {
+      const tl = gsap.timeline({ delay: 0.3 });
+      tl.fromTo(".hero-line", { y: "100%", opacity: 0 }, { y: "0%", opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" })
+        .fromTo(".hero-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.4")
+        .fromTo(".hero-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.3")
+        .fromTo(".hero-location", { opacity: 0 }, { opacity: 1, duration: 0.8 }, "-=0.6");
+    });
   }, []);
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-end pb-20 px-6 overflow-hidden"
+      ref={heroRef}
+      style={{
+        position: "relative", minHeight: "100svh", display: "flex",
+        flexDirection: "column", justifyContent: "flex-end",
+        padding: "0 2rem 5rem", overflow: "hidden",
+        background: "var(--bg)",
+      }}
     >
-      {/* Background grid */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)`,
-          backgroundSize: "80px 80px",
-          opacity: 0.3,
-        }}
-      />
-      {/* Radial glow */}
-      <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%)" }}
-      />
+      <ThreeCanvas />
 
-      <div className="relative max-w-7xl mx-auto w-full">
-        {/* Location tag */}
-        <p
-          className="chapter-label mb-10"
-          style={{ letterSpacing: "0.25em" }}
-        >
+      {/* Gradient vignette */}
+      <div style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        background: "radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 60%), linear-gradient(to bottom, transparent 40%, var(--bg) 100%)",
+      }} />
+
+      <div style={{ position: "relative", maxWidth: 1400, margin: "0 auto", width: "100%" }}>
+        <p className="hero-location chapter-label" style={{ marginBottom: "2.5rem", opacity: 0 }}>
           Thiruvananthapuram · Kerala · India
         </p>
 
-        <div ref={titleRef}>
-          <h1
-            className="font-light leading-[0.95] mb-8"
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(3.5rem, 10vw, 9rem)",
-              color: "var(--foreground)",
-            }}
-          >
-            We Design<br />
-            <span style={{ color: "var(--gold)" }}>We Build</span><br />
-            We Make It<br />
-            Happen
+        <div style={{ overflow: "hidden" }}>
+          <h1 style={{ fontFamily: "var(--font-h)", fontWeight: 400, lineHeight: 0.9, letterSpacing: "-0.02em" }}>
+            {["We Design", "We Build", "We Make It", "Happen"].map((line, i) => (
+              <div key={i} style={{ overflow: "hidden", display: "block" }}>
+                <span
+                  className="hero-line"
+                  style={{
+                    display: "block", fontSize: "clamp(3.5rem,9vw,8.5rem)",
+                    color: i === 1 ? "var(--gold)" : "var(--fg)",
+                    opacity: 0,
+                  }}
+                >
+                  {line}
+                </span>
+              </div>
+            ))}
           </h1>
-
-          <div className="flex flex-col sm:flex-row sm:items-end gap-8 sm:gap-16">
-            <p
-              className="text-base sm:text-lg font-light max-w-sm"
-              style={{ color: "rgba(245,240,232,0.6)", lineHeight: 1.7 }}
-            >
-              Your brand&apos;s full-service partner —<br />from idea to impact.
-            </p>
-            <a
-              href="#services"
-              className="inline-flex items-center gap-4 text-xs font-medium tracking-widest uppercase px-8 py-4 cursor-pointer transition-all duration-300 self-start"
-              style={{ background: "var(--gold)", color: "#0a0a0a" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--gold-light)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--gold)"; }}
-            >
-              Begin the Story
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-          </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute right-0 bottom-0 flex flex-col items-center gap-3">
-          <span className="chapter-label" style={{ writingMode: "vertical-rl" }}>Scroll</span>
-          <div className="w-px h-12" style={{ background: "var(--gold)", opacity: 0.5 }} />
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", gap: "2rem", marginTop: "3rem" }}>
+          <p className="hero-sub" style={{
+            fontSize: "1rem", color: "rgba(240,235,224,0.5)", lineHeight: 1.8,
+            maxWidth: 320, fontWeight: 300, opacity: 0,
+          }}>
+            Your brand&apos;s full-service partner —<br />from idea to impact.
+          </p>
+          <a
+            className="hero-cta"
+            href="#services"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "1rem",
+              fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.25em", textTransform: "uppercase",
+              padding: "1rem 2rem", background: "var(--gold)", color: "#000",
+              textDecoration: "none", cursor: "none", opacity: 0,
+              transition: "background 0.2s, transform 0.2s",
+            }}
+            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "#e8c96a"; el.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = "var(--gold)"; el.style.transform = "translateY(0)"; }}
+          >
+            Begin the Story
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </a>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div style={{
+        position: "absolute", right: "2rem", bottom: "4rem",
+        display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+      }}>
+        <span className="chapter-label" style={{ writingMode: "vertical-rl", letterSpacing: "0.3em" }}>Scroll</span>
+        <div style={{ width: 1, height: 60, background: "linear-gradient(to bottom, var(--gold), transparent)" }} />
       </div>
     </section>
   );

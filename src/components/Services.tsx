@@ -1,4 +1,5 @@
 "use client";
+
 const services = [
   { num: "01", title: "Branding & Identity", desc: "Logos, brand systems, print, packaging, campaign design and full brand strategy." },
   { num: "02", title: "Digital Marketing & Web", desc: "Custom websites, IT solutions, SEO, social media and performance marketing." },
@@ -10,52 +11,44 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 px-6" style={{ background: "var(--surface)" }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <p className="chapter-label mb-4">Chapter 01 — Everything We Do</p>
-          <h2
-            className="font-light"
-            style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2.5rem, 5vw, 4rem)", color: "var(--foreground)" }}
-          >
-            Six Ways We<br />
-            <em>Make Your Business Win</em>
+    <section id="services" style={{ padding: "8rem 2rem", background: "var(--surface)" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ marginBottom: "5rem" }}>
+          <p className="chapter-label reveal" style={{ marginBottom: "1.5rem" }}>Chapter 01 — Everything We Do</p>
+          <h2 className="reveal" style={{ fontFamily: "var(--font-h)", fontWeight: 400, fontSize: "clamp(2.5rem,5vw,4rem)", lineHeight: 1.05, color: "var(--fg)" }}>
+            Six Ways We<br /><em>Make Your Business Win</em>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: "var(--border)" }}>
-          {services.map((s) => (
+        <div className="stagger-parent" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 1, background: "var(--border)" }}>
+          {services.map(s => (
             <div
               key={s.num}
-              className="group p-8 flex flex-col gap-4 cursor-pointer transition-all duration-300"
-              style={{ background: "var(--surface)" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--surface-2)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--surface)"; }}
+              style={{ padding: "2.5rem", background: "var(--surface)", display: "flex", flexDirection: "column", gap: "1rem", transition: "background 0.3s", cursor: "none", minHeight: 220 }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "var(--surface2)";
+                (el.querySelector(".svc-num") as HTMLElement).style.color = "var(--gold)";
+                (el.querySelector(".svc-link") as HTMLElement).style.opacity = "1";
+                (el.querySelector(".svc-link") as HTMLElement).style.transform = "translateX(0)";
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "var(--surface)";
+                (el.querySelector(".svc-link") as HTMLElement).style.opacity = "0";
+                (el.querySelector(".svc-link") as HTMLElement).style.transform = "translateX(-8px)";
+              }}
             >
-              <span
-                className="text-xs font-mono font-bold"
-                style={{ color: "var(--gold)", letterSpacing: "0.15em" }}
-              >
-                {s.num}
+              <span className="svc-num" style={{ fontSize: "0.65rem", fontFamily: "monospace", color: "var(--gold)", letterSpacing: "0.15em", transition: "color 0.3s" }}>{s.num}</span>
+              <h3 style={{ fontFamily: "var(--font-h)", fontSize: "1.25rem", fontWeight: 500, color: "#fff" }}>{s.title}</h3>
+              <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.7, flex: 1 }}>{s.desc}</p>
+              <span className="svc-link" style={{
+                fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)",
+                opacity: 0, transform: "translateX(-8px)", transition: "all 0.3s",
+                display: "flex", alignItems: "center", gap: 8,
+              }}>
+                Learn more <span>→</span>
               </span>
-              <h3
-                className="text-xl font-medium text-white"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                {s.title}
-              </h3>
-              <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--muted)" }}>
-                {s.desc}
-              </p>
-              <div
-                className="flex items-center gap-2 text-xs font-medium tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ color: "var(--gold)" }}
-              >
-                Learn more
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
             </div>
           ))}
         </div>
