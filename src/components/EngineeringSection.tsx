@@ -12,7 +12,7 @@ const galleryImgs = [
 
 export default function EngineeringSection() {
   return (
-    <section id="engineering" style={{ padding: "8rem 2rem", background: "var(--surface)" }}>
+    <section id="engineering" style={{ padding: "8rem 2rem", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "center" }}>
           {/* Image grid */}

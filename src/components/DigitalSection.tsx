@@ -18,10 +18,10 @@ export default function DigitalSection() {
           </div>
 
           {/* Animated browser mockup */}
-          <div className="reveal-right" style={{ border: "1px solid var(--border)", background: "var(--surface)", overflow: "hidden" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0.75rem 1rem", borderBottom: "1px solid var(--border)", background: "var(--surface2)" }}>
+          <div className="reveal-right glass-gold" style={{ overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0.75rem 1rem", borderBottom: "1px solid rgba(201,168,76,0.1)", background: "rgba(0,0,0,0.4)" }}>
               {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />)}
-              <div style={{ flex: 1, margin: "0 0.75rem", padding: "0.25rem 0.75rem", background: "var(--border)", borderRadius: 3, fontSize: "0.7rem", color: "var(--muted)" }}>startup.io</div>
+              <div style={{ flex: 1, margin: "0 0.75rem", padding: "0.25rem 0.75rem", background: "rgba(255,255,255,0.05)", borderRadius: 3, fontSize: "0.7rem", color: "rgba(240,235,224,0.3)" }}>startup.io</div>
             </div>
             <div style={{ padding: "1.5rem" }}>
               {/* Simulated UI skeleton */}

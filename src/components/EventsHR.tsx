@@ -24,13 +24,13 @@ export default function EventsHR() {
               color: "var(--gold)", textDecoration: "none", borderBottom: "1px solid var(--gold)", paddingBottom: "0.4rem", cursor: "none",
             }}>Explore Events <span>→</span></a>
           </div>
-          <div className="stagger-parent" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--border)" }}>
+          <div className="stagger-parent" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "rgba(201,168,76,0.08)" }}>
             {items.map(item => (
-              <div key={item} style={{
-                padding: "1.5rem", background: "var(--surface)", transition: "background 0.3s", cursor: "none",
+              <div key={item} className="glass" style={{
+                padding: "1.5rem", transition: "background 0.3s, box-shadow 0.3s", cursor: "none",
               }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--surface2)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--surface)"; }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(201,168,76,0.07)"; el.style.boxShadow = "inset 0 1px 0 rgba(201,168,76,0.15)"; }}
+                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = ""; el.style.boxShadow = ""; }}
               >
                 <div style={{ width: 6, height: 6, background: "var(--gold)", marginBottom: "0.75rem" }} />
                 <p style={{ fontSize: "0.8rem", fontWeight: 500, color: "rgba(240,235,224,0.8)" }}>{item}</p>

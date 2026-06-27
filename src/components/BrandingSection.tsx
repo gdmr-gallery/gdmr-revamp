@@ -8,7 +8,7 @@ const brands = [
 export default function BrandingSection() {
   const doubled = [...brands, ...brands];
   return (
-    <section id="branding" style={{ padding: "8rem 0", background: "var(--surface)", overflow: "hidden" }}>
+    <section id="branding" style={{ padding: "8rem 0", background: "var(--bg)", overflow: "hidden", position: "relative" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 2rem", marginBottom: "4rem" }}>
         <p className="chapter-label reveal" style={{ marginBottom: "1.5rem" }}>Chapter 03 — Branding & Identity</p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "end" }}>
@@ -37,7 +37,7 @@ export default function BrandingSection() {
 
       {/* Double ticker rows */}
       {[false, true].map((reverse, ri) => (
-        <div key={ri} style={{ overflow: "hidden", padding: "0.8rem 0", borderTop: ri === 0 ? "1px solid var(--border)" : undefined, borderBottom: "1px solid var(--border)" }}>
+        <div key={ri} style={{ overflow: "hidden", padding: "0.8rem 0", borderTop: ri === 0 ? "1px solid rgba(201,168,76,0.1)" : undefined, borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
           <div className="ticker-track" style={{ display: "flex", whiteSpace: "nowrap", animation: `ticker ${reverse ? 40 : 30}s linear infinite ${reverse ? "reverse" : ""}` }}>
             {doubled.map((brand, i) => (
               <span key={i} style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}>

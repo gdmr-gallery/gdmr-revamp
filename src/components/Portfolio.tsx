@@ -24,7 +24,7 @@ export default function Portfolio() {
   const filtered = active === "All" ? projects : projects.filter(p => p.cat === active);
 
   return (
-    <section id="portfolio" style={{ padding: "8rem 2rem", background: "var(--surface)" }}>
+    <section id="portfolio" style={{ padding: "8rem 2rem", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ marginBottom: "4rem" }}>
           <p className="chapter-label reveal" style={{ marginBottom: "1.5rem" }}>Chapter 07 — Our Portfolio</p>

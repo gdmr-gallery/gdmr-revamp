@@ -2,7 +2,7 @@
 
 export default function CtaSection() {
   return (
-    <section id="contact" style={{ padding: "10rem 2rem", background: "var(--surface)", position: "relative", overflow: "hidden" }}>
+    <section id="contact" style={{ padding: "10rem 2rem", background: "var(--bg)", position: "relative", overflow: "hidden" }}>
       {/* BG text */}
       <div style={{
         position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",

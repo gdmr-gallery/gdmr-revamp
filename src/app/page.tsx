@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
+import ImmersiveHero from "@/components/ImmersiveHero";
 import Services from "@/components/Services";
 import About from "@/components/About";
 import BrandingSection from "@/components/BrandingSection";
@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Navbar />
       <main>
-        <Hero />
+        <ImmersiveHero />
         <Services />
         <About />
         <BrandingSection />
