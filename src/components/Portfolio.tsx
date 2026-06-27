@@ -1,21 +1,22 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 const tabs = ["All", "Digital Marketing", "Branding & Printing", "Graphics"];
 
 const projects = [
-  { title: "Aieque", cat: "Branding & Printing", accent: "#1a1209" },
-  { title: "Neelam", cat: "Branding & Printing", accent: "#0a1020" },
-  { title: "Dr Gins", cat: "Digital Marketing", accent: "#0f1a0f" },
-  { title: "Titan Edge Camo", cat: "Branding & Printing", accent: "#151510" },
-  { title: "Titan Raga", cat: "Branding & Printing", accent: "#1a1015" },
-  { title: "Shoppers Stop Elevation", cat: "Digital Marketing", accent: "#0a1020" },
-  { title: "Kenneth Cole", cat: "Branding & Printing", accent: "#100a0a" },
-  { title: "PUIG", cat: "Graphics", accent: "#0f0f1a" },
-  { title: "Sharvv", cat: "Branding & Printing", accent: "#1a0a0a" },
-  { title: "Casio", cat: "Digital Marketing", accent: "#0a0a1a" },
-  { title: "121 Fit Out", cat: "Branding & Printing", accent: "#121212" },
-  { title: "GDMR x Titan", cat: "Graphics", accent: "#1a150a" },
+  { title: "Aieque", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=600&q=80" },
+  { title: "Neelam", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" },
+  { title: "Dr Gins", cat: "Digital Marketing", img: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" },
+  { title: "Titan Edge Camo", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=600&q=80" },
+  { title: "Titan Raga", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1598531147738-b2a56bf9e27d?w=600&q=80" },
+  { title: "Shoppers Stop Elevation", cat: "Digital Marketing", img: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&q=80" },
+  { title: "Kenneth Cole", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&q=80" },
+  { title: "PUIG", cat: "Graphics", img: "https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=80" },
+  { title: "Sharvv", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=600&q=80" },
+  { title: "Casio", cat: "Digital Marketing", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" },
+  { title: "121 Fit Out", cat: "Branding & Printing", img: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80" },
+  { title: "GDMR × Titan", cat: "Graphics", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" },
 ];
 
 export default function Portfolio() {
@@ -47,47 +48,56 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 2, background: "var(--border)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 3 }}>
           {filtered.map(project => (
             <div
               key={project.title}
-              style={{
-                aspectRatio: "1", background: project.accent, position: "relative",
-                overflow: "hidden", cursor: "none",
-              }}
+              style={{ aspectRatio: "4/3", position: "relative", overflow: "hidden", cursor: "none" }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
+                (el.querySelector(".proj-img") as HTMLElement).style.transform = "scale(1.08)";
                 (el.querySelector(".proj-overlay") as HTMLElement).style.opacity = "1";
                 (el.querySelector(".proj-info") as HTMLElement).style.transform = "translateY(0)";
                 (el.querySelector(".proj-info") as HTMLElement).style.opacity = "1";
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
+                (el.querySelector(".proj-img") as HTMLElement).style.transform = "scale(1)";
                 (el.querySelector(".proj-overlay") as HTMLElement).style.opacity = "0";
-                (el.querySelector(".proj-info") as HTMLElement).style.transform = "translateY(12px)";
+                (el.querySelector(".proj-info") as HTMLElement).style.transform = "translateY(16px)";
                 (el.querySelector(".proj-info") as HTMLElement).style.opacity = "0";
               }}
             >
-              {/* Gold corner accent */}
-              <div style={{ position: "absolute", top: 12, left: 12, width: 16, height: 16, borderLeft: "1px solid var(--gold)", borderTop: "1px solid var(--gold)", opacity: 0.4 }} />
-              <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderRight: "1px solid var(--gold)", borderBottom: "1px solid var(--gold)", opacity: 0.4 }} />
-
-              {/* Default label */}
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1rem", background: "linear-gradient(transparent, rgba(0,0,0,0.6))" }}>
-                <p style={{ fontSize: "0.75rem", fontWeight: 500, color: "rgba(240,235,224,0.6)" }}>{project.title}</p>
-              </div>
-
+              <Image
+                className="proj-img"
+                src={project.img}
+                alt={project.title}
+                fill
+                sizes="(max-width:768px) 100vw, 33vw"
+                style={{ objectFit: "cover", transition: "transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)" }}
+              />
+              {/* Dark overlay always */}
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)" }} />
               {/* Hover overlay */}
               <div className="proj-overlay" style={{
-                position: "absolute", inset: 0, background: "rgba(201,168,76,0.08)",
-                opacity: 0, transition: "opacity 0.3s",
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(201,168,76,0.12) 100%)",
+                opacity: 0, transition: "opacity 0.4s",
               }} />
+              {/* Gold corner accents */}
+              <div style={{ position: "absolute", top: 12, left: 12, width: 18, height: 18, borderLeft: "1px solid var(--gold)", borderTop: "1px solid var(--gold)", opacity: 0.6 }} />
+              <div style={{ position: "absolute", bottom: 12, right: 12, width: 18, height: 18, borderRight: "1px solid var(--gold)", borderBottom: "1px solid var(--gold)", opacity: 0.6 }} />
+              {/* Default title */}
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1rem 1.2rem", background: "linear-gradient(transparent,rgba(0,0,0,0.7))" }}>
+                <p style={{ fontSize: "0.8rem", fontWeight: 500, color: "rgba(240,235,224,0.7)" }}>{project.title}</p>
+              </div>
+              {/* Hover info */}
               <div className="proj-info" style={{
-                position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.5rem",
-                opacity: 0, transform: "translateY(12px)", transition: "all 0.3s",
+                position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.5rem 1.2rem",
+                opacity: 0, transform: "translateY(16px)", transition: "all 0.35s ease",
               }}>
                 <p style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: 4 }}>{project.cat}</p>
-                <p style={{ fontSize: "0.85rem", fontWeight: 600, color: "#fff" }}>{project.title}</p>
+                <p style={{ fontSize: "1rem", fontWeight: 600, color: "#fff", fontFamily: "var(--font-h)" }}>{project.title}</p>
               </div>
             </div>
           ))}

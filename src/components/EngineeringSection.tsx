@@ -1,34 +1,35 @@
 "use client";
+import Image from "next/image";
 
 const clients = ["Shoppers Stop","Titan","Fastrack","Lakme","Tommy Hilfiger","Kenneth Cole","Coach","Anne Klein"];
+
+const galleryImgs = [
+  "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80",
+  "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80",
+  "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&q=80",
+  "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=600&q=80",
+];
 
 export default function EngineeringSection() {
   return (
     <section id="engineering" style={{ padding: "8rem 2rem", background: "var(--surface)" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "center" }}>
-          {/* Visual */}
-          <div className="reveal-left">
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, background: "var(--border)" }}>
-              {[
-                { label: "Retail Fit-Outs", icon: "⬛" },
-                { label: "Interior Design", icon: "⬛" },
-                { label: "Store Layouts", icon: "⬛" },
-                { label: "Visual Display", icon: "⬛" },
-              ].map((item, i) => (
-                <div key={i} style={{
-                  aspectRatio: "1", background: i % 2 === 0 ? "var(--bg)" : "var(--surface2)",
-                  display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "1.5rem",
-                  transition: "background 0.3s", cursor: "none",
-                }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--gold-dim)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? "var(--bg)" : "var(--surface2)"; }}
-                >
-                  <div style={{ width: 24, height: 24, border: "1px solid var(--gold)", opacity: 0.4, marginBottom: 8 }} />
-                  <p style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(240,235,224,0.4)" }}>{item.label}</p>
-                </div>
-              ))}
-            </div>
+          {/* Image grid */}
+          <div className="reveal-left" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4 }}>
+            {galleryImgs.map((img, i) => (
+              <div key={i} style={{
+                position: "relative", aspectRatio: "1", overflow: "hidden",
+                transition: "transform 0.4s ease", cursor: "none",
+              }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "scale(1.03)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "scale(1)"; }}
+              >
+                <Image src={img} alt="Engineering work" fill sizes="300px" style={{ objectFit: "cover", filter: "grayscale(30%)" }} />
+                <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.3)", transition: "opacity 0.3s" }} />
+                <div style={{ position: "absolute", top: 8, left: 8, width: 14, height: 14, borderLeft: "1px solid var(--gold)", borderTop: "1px solid var(--gold)", opacity: 0.6 }} />
+              </div>
+            ))}
           </div>
 
           <div>

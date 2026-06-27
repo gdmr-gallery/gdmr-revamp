@@ -1,8 +1,22 @@
 "use client";
+import Image from "next/image";
+
 const team = [
-  { name: "Sundar Swamy", role: "Founder", init: "SS" },
-  { name: "Githi Sreenivasan", role: "MD & Co-Founder", init: "GS" },
-  { name: "Gina Vijayabhaskar", role: "Partner & Exec. Director", init: "GV" },
+  {
+    name: "Sundar Swamy", role: "Founder", init: "SS",
+    img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
+    bio: "Visionary entrepreneur with 20+ years shaping brands across India.",
+  },
+  {
+    name: "Githi Sreenivasan", role: "MD & Co-Founder", init: "GS",
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+    bio: "Strategic leader driving GDMR's multi-disciplinary growth engine.",
+  },
+  {
+    name: "Gina Vijayabhaskar", role: "Partner & Exec. Director", init: "GV",
+    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+    bio: "Creative force behind GDMR's award-winning brand identities.",
+  },
 ];
 
 export default function Team() {
@@ -17,26 +31,43 @@ export default function Team() {
           <p className="reveal" style={{ marginTop: "1rem", fontSize: "0.85rem", color: "var(--muted)" }}>Three visionaries. One mission. Build brands that last.</p>
         </div>
 
-        <div className="stagger-parent" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 2, background: "var(--border)" }}>
+        <div className="stagger-parent" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "2rem" }}>
           {team.map(m => (
-            <div key={m.name} style={{
-              padding: "3rem 2rem", background: "var(--surface)", transition: "background 0.3s", cursor: "none",
-            }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--surface2)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--surface)"; }}
+            <div key={m.name} style={{ cursor: "none" }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLElement;
+                (el.querySelector(".team-img") as HTMLElement).style.transform = "scale(1.05)";
+                (el.querySelector(".team-line") as HTMLElement).style.width = "100%";
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLElement;
+                (el.querySelector(".team-img") as HTMLElement).style.transform = "scale(1)";
+                (el.querySelector(".team-line") as HTMLElement).style.width = "2rem";
+              }}
             >
-              <div style={{
-                width: 64, height: 64, border: "1px solid var(--border)", marginBottom: "1.5rem",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "var(--font-h)", fontSize: "1rem", color: "var(--gold)", letterSpacing: "0.1em",
-                position: "relative",
-              }}>
-                {m.init}
-                <div style={{ position: "absolute", top: -4, left: -4, width: 12, height: 12, borderLeft: "1px solid var(--gold)", borderTop: "1px solid var(--gold)" }} />
-                <div style={{ position: "absolute", bottom: -4, right: -4, width: 12, height: 12, borderRight: "1px solid var(--gold)", borderBottom: "1px solid var(--gold)" }} />
+              {/* Photo */}
+              <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", marginBottom: "1.5rem" }}>
+                <Image
+                  className="team-img"
+                  src={m.img}
+                  alt={m.name}
+                  fill
+                  sizes="(max-width:768px) 100vw, 33vw"
+                  style={{ objectFit: "cover", objectPosition: "top", transition: "transform 0.6s ease", filter: "grayscale(20%)" }}
+                />
+                {/* Gold overlay tint */}
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(201,168,76,0.15) 0%, transparent 60%)" }} />
+                {/* Corner accents */}
+                <div style={{ position: "absolute", top: 12, left: 12, width: 20, height: 20, borderLeft: "1px solid var(--gold)", borderTop: "1px solid var(--gold)", opacity: 0.7 }} />
+                <div style={{ position: "absolute", bottom: 12, right: 12, width: 20, height: 20, borderRight: "1px solid var(--gold)", borderBottom: "1px solid var(--gold)", opacity: 0.7 }} />
               </div>
-              <h3 style={{ fontFamily: "var(--font-h)", fontSize: "1.3rem", fontWeight: 500, color: "#fff", marginBottom: "0.5rem" }}>{m.name}</h3>
-              <p style={{ fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)" }}>{m.role}</p>
+              {/* Info */}
+              <div>
+                <div className="team-line" style={{ height: 1, background: "var(--gold)", width: "2rem", marginBottom: "1rem", transition: "width 0.4s ease" }} />
+                <h3 style={{ fontFamily: "var(--font-h)", fontSize: "1.4rem", fontWeight: 500, color: "#fff", marginBottom: "0.3rem" }}>{m.name}</h3>
+                <p style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "0.75rem" }}>{m.role}</p>
+                <p style={{ fontSize: "0.8rem", color: "var(--muted)", lineHeight: 1.7 }}>{m.bio}</p>
+              </div>
             </div>
           ))}
         </div>
